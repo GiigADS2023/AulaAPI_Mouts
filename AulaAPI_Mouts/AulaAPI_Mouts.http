@@ -1,0 +1,6 @@
+@AulaAPI_Mouts_HostAddress = http://localhost:5122
+
+GET {{AulaAPI_Mouts_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
