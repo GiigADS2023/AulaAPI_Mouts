@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AulaAPI_Mouts.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace AulaAPI_Mouts.Models
+namespace AulaAPI_Mouts.Data
 {
     public class TodoContext : DbContext
     {
@@ -8,6 +9,6 @@ namespace AulaAPI_Mouts.Models
         {
         }
 
-        public DbSet<TodoItem> TodoItems { get; set; } = null!;
+        public DbSet<TodoItem> TodoItem { get; set; } = null!;
     }
 }

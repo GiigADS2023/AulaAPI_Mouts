@@ -1,5 +1,8 @@
+using AulaAPI_Mouts.Data;
+using AulaAPI_Mouts.Interface;
 using AulaAPI_Mouts.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 namespace AulaAPI_Mouts
 {
@@ -13,7 +16,8 @@ namespace AulaAPI_Mouts
              * * Especifica que o contexto de banco de dados usará um banco de dados em memória.
              */
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+            builder.Services.AddDbContext<TodoContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("TodoContext")));
+
 
             // Add services to the container.
 
@@ -39,6 +43,6 @@ namespace AulaAPI_Mouts
             app.MapControllers();
 
             app.Run();
-        }
+        }        
     }
 }

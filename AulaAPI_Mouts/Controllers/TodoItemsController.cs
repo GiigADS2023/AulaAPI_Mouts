@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AulaAPI_Mouts.Models;
+using AulaAPI_Mouts.Data;
 
 namespace AulaAPI_Mouts.Controllers
 {
@@ -24,7 +25,7 @@ namespace AulaAPI_Mouts.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems()
         {
-            return await _context.TodoItems
+            return await _context.TodoItem
                 .Select(x => ItemToDTO(x))
                 .ToListAsync();
         }
@@ -32,9 +33,9 @@ namespace AulaAPI_Mouts.Controllers
         // GET: api/TodoItems/5
         // <snippet_GetByID>
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
+        public async Task<ActionResult<TodoItemDTO>> GetTodoItem(int id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var todoItem = await _context.TodoItem.FindAsync(id);
 
             if (todoItem == null)
             {
@@ -49,14 +50,14 @@ namespace AulaAPI_Mouts.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // <snippet_Update>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoItem(long id, TodoItemDTO todoDTO)
+        public async Task<IActionResult> PutTodoItem(int id, TodoItemDTO todoDTO)
         {
             if (id != todoDTO.Id)
             {
                 return BadRequest();
             }
 
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var todoItem = await _context.TodoItem.FindAsync(id);
             if (todoItem == null)
             {
                 return NotFound();
@@ -90,7 +91,7 @@ namespace AulaAPI_Mouts.Controllers
                 Name = todoDTO.Name
             };
 
-            _context.TodoItems.Add(todoItem);
+            _context.TodoItem.Add(todoItem);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(
@@ -102,23 +103,23 @@ namespace AulaAPI_Mouts.Controllers
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTodoItem(long id)
+        public async Task<IActionResult> DeleteTodoItem(int id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var todoItem = await _context.TodoItem.FindAsync(id);
             if (todoItem == null)
             {
                 return NotFound();
             }
 
-            _context.TodoItems.Remove(todoItem);
+            _context.TodoItem.Remove(todoItem);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TodoItemExists(long id)
+        private bool TodoItemExists(int id)
         {
-            return _context.TodoItems.Any(e => e.Id == id);
+            return _context.TodoItem.Any(e => e.Id == id);
         }
 
         private static TodoItemDTO ItemToDTO(TodoItem todoItem) =>
